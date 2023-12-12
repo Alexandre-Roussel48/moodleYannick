@@ -1,0 +1,28 @@
+services:
+  php-env:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - 80:80
+    environment:
+      PHP_OPCACHE_VALIDATE_TIMESTAMPS: 1
+
+  moodle_db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      MYSQL_DATABASE: moodle
+      MYSQL_USER: dude
+      MYSQL_PASSWORD: dude
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
